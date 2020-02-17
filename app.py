@@ -31,12 +31,13 @@ def getProduct(id):
 
 @app.route('/product/<id>', methods=['PUT'])
 def updateProduct(id):
+    time.sleep(1)
     return "product {} is being updated".format(id)
 
 
 @app.route('/products', methods=['GET'])
 def listProducts():
-    time.sleep(5)
+    time.sleep(3)
     return "suppose I send you product list..."
 
 # In order to active flask-profiler, you have to pass flask
