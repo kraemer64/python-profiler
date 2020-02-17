@@ -46,17 +46,17 @@ def pythonic(N=10000000):
 def main():
     fast()
     pythonic()
-    #medium()
-    #slow()
+    medium()
+    slow()
 
 if __name__ == '__main__':
     #main()
     print('Direktes Profiling--------------')
-    cProfile.run('main()', 'restats.txt)
+    cProfile.run('main()', 'restats.txt')
     print('Direktes Profiling closed--------------')
     print('')
     print('Ausgelagertes Profiling----------')
     cProfile.run('main()', 'restats.txt')
-    restats = pstats.Stats('restats.txt')
+    restats = pstats.Stats('restats.txt').sort_stats('cumulative')
     restats.strip_dirs().sort_stats(-1).print_stats()
     print('Ausgelagertes Profiling done----------')

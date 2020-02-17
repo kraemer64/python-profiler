@@ -6,14 +6,18 @@ import time
 def yappi_write():
     yappi.stop()
     print('[YAPPI STOP]')
-    stats = yappi.get_func_stats()
-    threadstats = yappi.get_thread_stats()
+    # stats = yappi.get_func_stats()
+    # threadstats = yappi.get_thread_stats()
 
-    for stat in yappi.get_func_stats():
+    # Configuratable stats output
+    '''for stat in yappi.get_func_stats():
         print('Name: ' + stat.name + ' Ncall: ' + str(stat.ncall) + ' Ttot: ' + str(stat.ttot))
 
     for threadstat in yappi.get_thread_stats():
-        print(yappi.get_func_stats(filter={"ctx_id":threadstat.id}))
+        print(yappi.get_func_stats(filter={"ctx_id":threadstat.id}))'''
+
+    yappi.get_func_stats().print_all()
+    yappi.get_thread_stats().print_all()
 
 
 # yappi test
