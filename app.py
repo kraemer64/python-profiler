@@ -1,6 +1,6 @@
 # your app.py
 from flask import Flask
-import flask_profiler
+from flask_profiler import Profiler
 import time
 
 app = Flask(__name__)
@@ -24,26 +24,42 @@ app.config["flask_profiler"] = {
 }
 
 
-@app.route('/product/<id>', methods=['GET'])
-def getProduct(id):
-    return "product id is " + str(id)
+@app.route('/slowtest', methods=['GET'])
+def getslow():
+    total = 0
+    for i in range(10):
+        total += i
+        print(total)
+        time.sleep(4)
+    print('-------------------')
+    return "slow done"
 
+@app.route('/mediumtest', methods=['GET'])
+def getmedium():
+    total = 0
+    for i in range(10):
+        total += i
+        print(total)
+        time.sleep(2)
+    print('-------------------')
+    return "medium done"
 
-@app.route('/product/<id>', methods=['PUT'])
-def updateProduct(id):
-    time.sleep(1)
-    return "product {} is being updated".format(id)
+@app.route('/fasttest', methods=['GET'])
+def getfast():
+    total = 0
+    for i in range(10000000):
+        total += i
+    print('-------------------')
+    print(type(profiler))
+    print('-------------------')
+    return 'Fast done'
 
-
-@app.route('/products', methods=['GET'])
-def listProducts():
-    time.sleep(3)
-    return "suppose I send you product list..."
 
 # In order to active flask-profiler, you have to pass flask
 # app as an argument to flask-profiler.
 # All the endpoints declared so far will be tracked by flask-profiler.
-flask_profiler.init_app(app)
+profiler = Profiler()
+profiler.init_app(app)
 
 
 # endpoint declarations after flask_profiler.init_app() will be
@@ -55,10 +71,6 @@ def doSomething():
 
 # But in case you want an endpoint to be measured by flask-profiler,
 # you can specify this explicitly by using profile() decorator
-@app.route('/doSomethingImportant', methods=['GET'])
-@flask_profiler.profile()
-def doSomethingImportant():
-    return "flask-profiler will measure this request."
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=5000)
