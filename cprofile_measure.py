@@ -5,7 +5,8 @@ import pstats
 def profileprint(profiler):
     print('\n<---------CMD Function Profiling--------->\n')
     p = pstats.Stats(profiler)
-    p.strip_dirs().sort_stats(-1).print_stats()
+    p.strip_dirs().sort_stats('cumtime', 'tottime', 'ncalls', 'pcalls').print_stats()
+
 
 # cProfile decorator
 def profileit(func):
@@ -14,5 +15,5 @@ def profileit(func):
         retval = profiler.runcall(func, *args, **kwargs)
         profileprint(profiler)
         return retval
-    
+
     return wrapper
