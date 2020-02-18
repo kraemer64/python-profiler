@@ -16,8 +16,7 @@ def yappi_write():
     for threadstat in yappi.get_thread_stats():
         print(yappi.get_func_stats(filter={"ctx_id":threadstat.id}))'''
 
-    print(yappi.get_func_stats())
-    yappi.get_func_stats().print_all()
+    yappi.get_func_stats().debug_print()
     yappi.get_thread_stats().print_all()
 
 
