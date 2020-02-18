@@ -2,6 +2,7 @@ Click==7.0
 Flask==1.1.1
 Flask-HTTPAuth==3.3.0
 flask-profiler==1.8.1
+gprof2dot==2019.11.30
 itsdangerous==1.1.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1

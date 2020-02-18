@@ -51,10 +51,6 @@ def main():
 
 if __name__ == '__main__':
     #main()
-    print('Direktes Profiling--------------')
-    cProfile.run('main()', 'restats.txt')
-    print('Direktes Profiling closed--------------')
-    print('')
     print('Ausgelagertes Profiling----------')
     cProfile.run('main()', 'restats.txt')
     restats = pstats.Stats('restats.txt').sort_stats('cumulative')
