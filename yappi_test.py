@@ -1,5 +1,6 @@
 import yappi
 import time
+import os
 
 
 # generating yappi stats document
@@ -9,14 +10,23 @@ def yappi_write():
     # stats = yappi.get_func_stats()
     # threadstats = yappi.get_thread_stats()
 
+    f = open("yappistats.txt", "a")
+
     # Configuratable stats output
-    '''for stat in yappi.get_func_stats():
-        print('Name: ' + stat.name + ' Ncall: ' + str(stat.ncall) + ' Ttot: ' + str(stat.ttot))
+    f.write('Functionstats\n')
+    for stat in yappi.get_func_stats():
+        f.write('Name: ' + stat.full_name + ' Ncall: ' + str(stat.ncall) + ' Ttot: ' + str(stat.ttot) + ' ')
+        f.write('Module: ' + str(stat.module) + ' Children: ' + str(stat.children) + ' Tag: ' + str(stat.tag) + '\n')
 
+    f.write('-------------------------------------------------------------------------------------\n')
+    f.write('Threadstats\n')
     for threadstat in yappi.get_thread_stats():
-        print(yappi.get_func_stats(filter={"ctx_id":threadstat.id}))'''
+        f.write('ID: ' + str(threadstat.id) + ' Name: ' + threadstat.name + ' Ttot: ' + str(threadstat.ttot) + ' Schedule: ' + str(threadstat.sched_count) + '\n')
 
-    yappi.get_func_stats().debug_print()
+    print(yappi.get_func_stats().print_all())
+    f.close()
+
+    # yappi.get_func_stats().debug_print()
     yappi.get_thread_stats().print_all()
 
 
@@ -25,7 +35,7 @@ def slow(N=10):
     total = 0
     for i in range(N):
         total += i
-        print(total)
+        #print(total)
         time.sleep(4)
     print('Slow done')
     print('-------------------')
@@ -36,7 +46,7 @@ def medium(N=10):
     total = 0
     for i in range(N):
         total += i
-        print(total)
+        #print(total)
         time.sleep(2)
     print('Medium done')
     print('-------------------')
@@ -47,7 +57,7 @@ def fast(N=10000000):
     total = 0
     for i in range(N):
         total += i
-    print(total)
+    #print(total)
     print('Fast done')
     print('-------------------')
     return total
@@ -55,7 +65,7 @@ def fast(N=10000000):
 
 def pythonic(N=10000000):
     total = sum(range(N))
-    print(total)
+    #print(total)
     print('Pythonic done')
     print('-------------------')
     return total
